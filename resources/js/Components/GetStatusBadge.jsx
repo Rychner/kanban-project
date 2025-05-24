@@ -1,5 +1,5 @@
 import { STATUS } from '@/lib/utils';
-import { Badge } from '@/resources/js/components/ui/badge';
+import { Badge } from '@/resources/js/Components/ui/badge';
 
 export default function GetStatusBadge({ status }) {
     const { TODO, INPROGRESS, ONREVIEW, DONE, UNKNOWN } = STATUS;
