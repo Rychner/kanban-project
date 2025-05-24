@@ -21,7 +21,7 @@ export default function GetPriorityBadge({ priority }) {
         case LOW:
             badge = 'bg-green-500 hover:bg-green-400';
             text = LOW;
-            break;       
+            break;
 
         default:
             badge = '';
@@ -29,5 +29,5 @@ export default function GetPriorityBadge({ priority }) {
             break;
     }
 
-    return <Badge className={badge}>{text}</Badge>
+    return <Badge className={badge}>{text}</Badge>;
 }

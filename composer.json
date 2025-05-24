@@ -38,7 +38,6 @@
         "psr-4": {
             "Tests\\": "tests/"
         },
-
         "files": [
             "app/Helpers/FlashMessageHelper.php"
         ]

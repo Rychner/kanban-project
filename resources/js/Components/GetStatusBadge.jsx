@@ -21,7 +21,7 @@ export default function GetStatusBadge({ status }) {
         case DONE:
             badge = 'bg-green-500 hover:bg-green-400';
             text = DONE;
-            break;       
+            break;
 
         default:
             badge = '';
@@ -29,5 +29,5 @@ export default function GetStatusBadge({ status }) {
             break;
     }
 
-    return <Badge className={badge}>{text}</Badge>
+    return <Badge className={badge}>{text}</Badge>;
 }

@@ -1,6 +1,16 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/resources/js/Components/ui/alert-dialog";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/resources/js/Components/ui/alert-dialog';
 
-export function ActionDialog({trigger, action, title, description}){
+export function ActionDialog({ trigger, action, title, description }) {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
@@ -14,7 +24,6 @@ export function ActionDialog({trigger, action, title, description}){
                     <AlertDialogAction onClick={action}>Continue</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
-
         </AlertDialog>
-    )
+    );
 }
