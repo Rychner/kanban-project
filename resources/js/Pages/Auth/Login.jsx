@@ -55,9 +55,7 @@ export default function Login({ status, canResetPassword }) {
                                             className="mt-1 block w-full"
                                             isFocused={true}
                                             onChange={(e) => setData('email', e.target.value)}
-                                            onErrors={
-                                                errors.email && <InputError className="mt-1" message={errors.email} />
-                                            }
+                                            onErrors={errors.email && <InputError message={errors.email} />}
                                         ></TextInput>
                                     </div>
                                     <div>
@@ -82,11 +80,7 @@ export default function Login({ status, canResetPassword }) {
                                                 value={data.password}
                                                 className="mt-1 block w-full"
                                                 onChange={(e) => setData('password', e.target.value)}
-                                                onErrors={
-                                                    errors.password && (
-                                                        <InputError className="mt-1" message={errors.password} />
-                                                    )
-                                                }
+                                                onErrors={errors.password && <InputError message={errors.password} />}
                                             ></TextInput>
                                         </div>
                                     </div>
