@@ -31,7 +31,7 @@ export default function ConfirmPassword() {
                     <Card>
                         <CardHeader>
                             <Link href="/" className="text-4xl font-black leading-relaxed tracking-tighter">
-                                Plannify<span className="text-red-500">.</span>
+                                Kanban<span className="text-red-500">.</span>
                             </Link>
                             <h2 className="text-left text-lg font-medium leading-9 tracking-tight text-muted-foreground">
                                 This is a secure area of the application. Please confirm your password before

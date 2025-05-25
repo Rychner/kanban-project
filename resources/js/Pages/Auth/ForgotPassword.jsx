@@ -23,7 +23,7 @@ export default function ForgotPassword({ status }) {
                     <Card>
                         <CardHeader>
                             <Link href="/" className="text-4xl font-black leading-relaxed tracking-tighter">
-                                Plannify<span className="text-red-500">.</span>
+                                Kanban<span className="text-red-500">.</span>
                             </Link>
                             <h2 className="text-left text-lg font-medium leading-9 tracking-tight text-muted-foreground">
                                 Forgot your password? No problem. Just let us know your email address and we will email
