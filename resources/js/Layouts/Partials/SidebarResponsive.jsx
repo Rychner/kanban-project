@@ -74,7 +74,9 @@ export default function SidebarResponsive({ auth, url }) {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    href={route('logout')}
+                                    method="POST"
+                                    as="button"
                                     className={cn(
                                         url.startsWith('/logout')
                                             ? 'bg-red-500 text-white'
