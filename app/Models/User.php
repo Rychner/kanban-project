@@ -56,26 +56,26 @@ class User extends Authenticatable
 
     public function workspaces(): HasMany
     {
-        return this->hasMany(Workspace::class);
+        return $this->hasMany(Workspace::class);
     }
 
     public function cards(): HasMany
     {
-        return this->hasMany(Card::class);
+        return $this->hasMany(Card::class);
     }
 
     public function members(): HasMany
     {
-        return this->hasMany(Member::class);
+        return $this->hasMany(Member::class);
     }
 
     public function attachments(): HasMany
     {
-        return this->hasMany(Attachment::class);
+        return $this->hasMany(Attachment::class);
     }
 
     public function tasks(): HasMany
     {
-        return this->hasMany(Task::class);
+        return $this->hasMany(Task::class);
     }
 }

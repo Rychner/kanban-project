@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WorkspaceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,7 +18,14 @@ Route::get('/', function () {
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
-Route::get('testing', fn() => Inertia::render('Testing'));
+Route::controller(WorkspaceController::class)->group(function () {
+    Route::get('workspace/create', 'create')->name('workspace.create');
+    Route::post('workspace/create', 'store')->name('workspace.store');
+    Route::get('workspace/p/{workspace:slug}', 'show')->name('workspace.show');
+    Route::get('workspace/edit/{workspace:slug}', 'edit')->name('workspace.edit');
+    Route::put('workspace/edit/{workspace:slug}', 'update')->name('workspace.update');
+    Route::delete('workspace/destroy/{workspace:slug}', 'destroy')->name('workspace.destroy');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
