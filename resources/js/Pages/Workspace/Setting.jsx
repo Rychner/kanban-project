@@ -16,7 +16,7 @@ export default function Setting({ ...props }) {
             </div>
             <div className="grid grid-cols-1 gap-x-4 gap-y-8 pt-10 md:grid-cols-3">
                 <HeaderForm className="col-span-full" title="Members" subtitle="Please add Members to the Workspace" />
-                <MemberWorkspace action={route('workspace.member_store', [workspace])} />
+                <MemberWorkspace action={route('workspace.member_store', [workspace])} members={workspace.members} />
             </div>
         </div>
     );

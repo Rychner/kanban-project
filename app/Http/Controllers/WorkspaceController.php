@@ -59,7 +59,7 @@ class WorkspaceController extends Controller
     public function edit(Workspace $workspace): Response
     {
         return inertia(component: 'Workspace/Setting', props: [
-            'workspace'     => fn () => new WorkspaceResource($workspace),
+            'workspace'     => fn () => new WorkspaceResource($workspace->load('members')),
             'page_settings' => [
                 'title'     => 'Edit Workspace',
                 'subtitle'  => 'Fill out this form to Edit Workspace',
@@ -101,7 +101,7 @@ class WorkspaceController extends Controller
             return back();
         }
 
-        if($workspace->members()->where('user_id', $user_id)->exist())
+        if($workspace->members()->where('user_id', $user->id)->exists())
         {
             flashMessage('User is already a Member of this workspace', 'error');
             return back();
