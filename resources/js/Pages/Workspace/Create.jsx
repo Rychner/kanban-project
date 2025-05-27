@@ -29,6 +29,7 @@ export default function Create({ page_settings, visibilities }) {
             preserveState: true,
         });
     };
+
     return (
         <>
             <div className="space-y-10 divide-y divide-dashed divide-gray-900/10">
@@ -74,7 +75,7 @@ export default function Create({ page_settings, visibilities }) {
                                             />
                                         </div>
                                         <div className="col-span-full">
-                                            <InputLabel htmlFor="visivility" value="Visibility" />
+                                            <InputLabel htmlFor="visibility" value="Visibility" />
                                             <Select
                                                 defaultValue="Select a visibility"
                                                 onValueChange={(e) => setData('visibility', value)}
