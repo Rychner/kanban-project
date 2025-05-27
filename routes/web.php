@@ -25,6 +25,8 @@ Route::controller(WorkspaceController::class)->group(function () {
     Route::get('workspace/edit/{workspace:slug}', 'edit')->name('workspace.edit');
     Route::put('workspace/edit/{workspace:slug}', 'update')->name('workspace.update');
     Route::delete('workspace/destroy/{workspace:slug}', 'destroy')->name('workspace.destroy');
+    Route::post('workspace/member/{workspace:slug}/store', 'member_store')->name('workspace.member_store');
+    Route::delete('workspace/member/{workspace:slug}/destroy', 'member_destroy')->name('workspace.member_destroy');
 });
 
 Route::middleware('auth')->group(function () {

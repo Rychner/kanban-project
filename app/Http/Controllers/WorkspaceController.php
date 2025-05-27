@@ -9,6 +9,7 @@ use App\Enums\WorkspaceVisibility;
 use App\Traits\HasFile;
 use App\Http\Requests\WorkspaceRequest;
 use App\Models\Workspace;
+use App\Models\User;
 use App\Http\Resources\WorkspaceResource;
 
 class WorkspaceController extends Controller
@@ -36,6 +37,11 @@ class WorkspaceController extends Controller
             'cover'         => $this->upload_file($request, 'cover', 'workspace/cover'),
             'logo'          => $this->upload_file($request, 'logo', 'workspace/logo'),
             'visibility'    => $request->visibility,
+        ]);
+
+        $workspace->members()->create([
+            'user_id'   => $request->user()->id,
+            'role'      => $workspace->user_id == $request->user()->id ? 'Project Manager' : 'Member',
         ]);
 
         flashMessage('Workspace Information Succesfully Saved', 'success');
@@ -77,5 +83,36 @@ class WorkspaceController extends Controller
         flashMessage('Succesfully Update Workspace', 'success');
 
         return to_route('workspace.show', $workspace);
+    }
+
+    public function member_store(Workspace $workspace, Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => [
+                'required','email','string',
+            ],
+        ]);
+
+        $user = User::query()->where('email', $request->email)->first();
+
+        if(!$user)
+        {
+            flashMessage('Unregistered User', 'error');
+            return back();
+        }
+
+        if($workspace->members()->where('user_id', $user_id)->exist())
+        {
+            flashMessage('User is already a Member of this workspace', 'error');
+            return back();
+        }
+
+        $workspace->members()->create([
+            'user_id'   => $user->id,
+            'role'      => 'Member',
+        ]);
+
+        flashMessage('Member Succesfully Invited');
+        return back();
     }
 }

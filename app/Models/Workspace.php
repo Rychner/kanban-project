@@ -39,11 +39,11 @@ class Workspace extends Model
 
     public function cards(): HasMany
     {
-        return this->hasMany(Card::class);
+        return $this->hasMany(Card::class);
     }
 
     public function members(): MorphMany
     {
-        return this->morphMany(Member::class, 'memberable');
+        return $this->morphMany(Member::class, 'memberable');
     }
 }
