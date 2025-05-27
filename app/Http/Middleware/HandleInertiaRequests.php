@@ -46,7 +46,7 @@ class HandleInertiaRequests extends Middleware
                 'type' => $request->session()->get('type'),
                 'message' => $request->session()->get('message')
             ],
-            'workspace' => fn () => $request->user() ? WorkspaceSidebarResource::collection(
+            'workspaces' => fn () => $request->user() ? WorkspaceSidebarResource::collection(
                 Workspace::query()->where('user_id', $request->user()->id)->get()
             ) : null,
         ];

@@ -11,7 +11,7 @@ export default function AppLayout({ children, title }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const auth = usePage().props.auth.user;
     const { url } = usePage();
-    const workspaces = usePage().props.workspace;
+    const workspaces = usePage().props.workspaces;
 
     return (
         <>
