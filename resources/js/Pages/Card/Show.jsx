@@ -9,7 +9,7 @@ export default function Show({ card, page_settings }) {
         <>
             <Header title={page_settings.title} subtitle={page_settings.subtitle} />
             <Card>
-                <CardContent classname="mt-4">
+                <CardContent className="mt-4">
                     <div className="border-top border-gray-200">
                         <dl className="divide-y divide-gray-100">
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

@@ -1,8 +1,14 @@
 import GetPriorityBadge from '@/Components/GetPriorityBadge';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/Components/ui/dropdown-menu';
 import AppLayout from '@/Layouts/AppLayout';
 import { Link } from '@inertiajs/react';
-import { PiPlus } from 'react-icons/pi';
+import { PiDotsThreeOutlineFill, PiPencilSimpleFill, PiPlus } from 'react-icons/pi';
 
 export default function Show({ ...props }) {
     const workspace = props.workspace;
@@ -85,6 +91,23 @@ export default function Show({ ...props }) {
                                                             {card.title}
                                                         </Link>
                                                     </CardTitle>
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger>
+                                                            <PiDotsThreeOutlineFill className="size-4" />
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end" className="w-16">
+                                                            <DropdownMenuItem asChild>
+                                                                <Link href={route('card.edit', [workspace, card])}>
+                                                                    <div className="flex items-center justify-between">
+                                                                        <span>Edit</span>
+                                                                        <span className="size-4">
+                                                                            <PiPencilSimpleFill />
+                                                                        </span>
+                                                                    </div>
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
                                                 </div>
                                                 <div>
                                                     <GetPriorityBadge priority={card.priority} />
