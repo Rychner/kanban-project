@@ -27,14 +27,13 @@ export default function Create({ page_settings, statuses, priorities, workspace 
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
-        console.log('Priorities:', priorities);
         post(page_settings.action, {
+            preserveScroll: true,
+            preserveState: true,
             onSuccess: (success) => {
                 const flash = flashMessage(success);
                 if (flash) toast[flash.type](flash.message);
             },
-            preserveScroll: true,
-            preserveState: true,
         });
     };
 
@@ -96,7 +95,7 @@ export default function Create({ page_settings, statuses, priorities, workspace 
                                             >
                                                 <SelectTrigger>
                                                     <SelectValue>
-                                                        {priorities.find((priority) => priority.value === data.priority)
+                                                        {priorities.find((priority) => priority.value == data.priority)
                                                             ?.label ?? 'Select a Priority'}
                                                     </SelectValue>
                                                 </SelectTrigger>

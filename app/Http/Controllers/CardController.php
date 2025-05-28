@@ -8,6 +8,7 @@ use App\Enums\CardStatus;
 use App\Enums\CardPriority;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\CardRequest;
+use App\Http\Resources\CardSingleResource;
 use App\Models\Workspace;
 use App\Models\Card;
 
@@ -43,19 +44,30 @@ class CardController extends Controller
     }
 
     public function store(Workspace $workspace, CardRequest $request): RedirectResponse
-    {        
-        $card = $request->user()->cards()->create([
+    {                
+        $request->user()->cards()->create([
             'workspace_id'  => $workspace->id,
             'title'         => $request->title,
             'description'   => $request->description,
             'deadline'      => $request->deadline,
             'status'        => $request->status,
-            'order'         => $this->ordering($workspace, $request->status),
             'priority'      => $request->priority,
+            'order'         => $this->ordering($workspace, $request->status),
         ]);
 
         flashMessage('Card Information Succesfully Saved', 'success');
 
         return to_route('workspace.show', [$workspace]);
+    }
+
+    public function show(Workspace $workspace, Card $card): Response
+    {
+        return inertia('Card/Show', [
+            'card'          => fn() => new CardSingleResource($card->load(['members','tasks','user','attachments'])),
+            'page_settings' => [
+                'title'     => 'Detail Card',
+                'subtitle'  => 'You can see Card Information here.',
+            ],
+        ]);
     }
 }

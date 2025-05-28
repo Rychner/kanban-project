@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
+use App\Enums\CardStatus;
+use App\Enums\CardPriority;
 
 class CardRequest extends FormRequest
 {
@@ -26,8 +28,8 @@ class CardRequest extends FormRequest
             'title'         => ['required','max:255','string'],
             'description'   => ['required','string'],
             'deadline'      => ['nullable', 'date'],
-            'status'        => ['required', new Enum(CardStatus::class)],
             'priority'      => ['required', new Enum(CardPriority::class)],
+            'status'        => ['required', new Enum(CardStatus::class)],
         ];
     }
 

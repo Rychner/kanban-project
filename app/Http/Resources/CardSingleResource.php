@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 
-class CardResource extends JsonResource
+class CardSingleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,10 +21,13 @@ class CardResource extends JsonResource
             'title'         => $this->title,
             'workspace_id'  => $this->workspace_id,
             'description'   => $this->description,
-            'status'        => $this->status,
+            'deadline'      => [
+                'format'        => Carbon::createFromFormat('Y-m-d', $this->deadline)->format('d M Y'),
+                'unformatted'   => $this->deadline,
+            ],
+            'status'        => $this->status->value,
             'priority'      => $this->priority,
-            'created_at'    => $this->created_at->format('d M Y'),
-            'deadline'      => (int) Carbon::now()->diffInDays(Carbon::createFromFormat('Y-m-d', $this->deadline)),
+            'created_at'    => $this->created_at->format('d M Y'),            
         ];
     }
 }
