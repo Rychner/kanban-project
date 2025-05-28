@@ -50,16 +50,16 @@ class Card extends Model
 
     public function attachments(): HasMany
     {
-        return this->hasMany(Attachment::class);
+        return $this->hasMany(Attachment::class);
     }
 
     public function tasks(): HasMany
     {
-        return this->hasMany(Task::class);
+        return $this->hasMany(Task::class);
     }
 
     public function members(): MorphMany
     {
-        return this->morphMany(Member::class, 'memberable');
+        return $this->morphMany(Member::class, 'memberable');
     }
 }
