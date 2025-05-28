@@ -10,6 +10,7 @@ use App\Traits\HasFile;
 use App\Http\Requests\WorkspaceRequest;
 use App\Models\Workspace;
 use App\Models\User;
+use App\Models\Member;
 use App\Http\Resources\WorkspaceResource;
 
 class WorkspaceController extends Controller
@@ -113,6 +114,14 @@ class WorkspaceController extends Controller
         ]);
 
         flashMessage('Member Succesfully Invited');
+        return back();
+    }
+
+    public function member_destroy(Workspace $workspace, Member $member): RedirectResponse
+    {
+        $member->delete();
+
+        flashMessage('Member Succesfully Deleted');
         return back();
     }
 }
