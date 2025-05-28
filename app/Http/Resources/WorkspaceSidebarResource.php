@@ -15,9 +15,13 @@ class WorkspaceSidebarResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'    => $this->id,
-            'name'  => $this->name,
-            'slug'  => $this->slug,
+            'id'            => $this->id,
+            'memberable'    => [
+                'id'            => $this->memberable->id,
+                'name'          => $this->memberable->name,
+                'slug'          => $this->memberable->slug,
+                'created_at'    => $this->memberable->created_at->format('d M Y'),
+            ],
         ];
     }
 }
