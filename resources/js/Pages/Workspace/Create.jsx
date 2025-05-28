@@ -18,6 +18,7 @@ export default function Create({ page_settings, visibilities }) {
         visibility: 'Private',
         _method: page_settings.method,
     });
+
     const onHandleSubmit = (e) => {
         e.preventDefault();
         post(page_settings.action, {
@@ -77,13 +78,13 @@ export default function Create({ page_settings, visibilities }) {
                                         <div className="col-span-full">
                                             <InputLabel htmlFor="visibility" value="Visibility" />
                                             <Select
-                                                defaultValue="Select a visibility"
-                                                onValueChange={(e) => setData('visibility', value)}
+                                                defaultValue={data.visibility}
+                                                onValueChange={(value) => setData('visibility', value)}
                                             >
                                                 <SelectTrigger>
                                                     <SelectValue>
                                                         {visibilities.find(
-                                                            (visibility) => (visibility.value = data.visibility),
+                                                            (visibility) => visibility.value == data.visibility,
                                                         )?.label ?? 'Select a Visibility'}
                                                     </SelectValue>
                                                 </SelectTrigger>

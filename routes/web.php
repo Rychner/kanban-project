@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WorkspaceController;
+use App\Http\Controllers\CardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,16 @@ Route::controller(WorkspaceController::class)->group(function () {
     Route::post('workspace/member/{workspace:slug}/store', 'member_store')->name('workspace.member_store');
     Route::delete('workspace/member/{workspace}/destroy/{member}', 'member_destroy')->name('workspace.member_destroy');
 });
+
+Route::controller(CardController::class)->group(function () {
+    Route::get('card/{workspace:slug}/create', 'create')->name('card.create');
+    Route::post('card/{workspace:slug}/store', 'store')->name('card.store');
+    Route::get('card/{workspace:slug}/detail/{card}', 'show')->name('card.show');
+    Route::get('card/{workspace:slug}/edit/{card}', 'edit')->name('card.edit');
+    Route::put('card/{workspace:slug}/edit/{card}', 'update')->name('card.update');
+    Route::post('card/{workspace:slug}/{card}/reorder', 'reorder')->name('card.reorder');
+    Route::delete('card/{workspace:slug}/destroy/{card}', 'destroy')->name('card.destroy');
+})->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
