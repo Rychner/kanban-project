@@ -49,8 +49,8 @@ class CardController extends Controller
             'title'         => $request->title,
             'description'   => $request->description,
             'deadline'      => $request->deadline,
-            'status'        => $status = $request->status,
-            'order'         => $this->ordering($workspace, $status),
+            'status'        => $request->status,
+            'order'         => $this->ordering($workspace, $request->status),
             'priority'      => $request->priority,
         ]);
 

@@ -12,6 +12,9 @@ use App\Models\Workspace;
 use App\Models\User;
 use App\Models\Member;
 use App\Http\Resources\WorkspaceResource;
+use App\Http\Resources\CardResource;
+use App\Enums\CardStatus;
+use App\Enums\CardPriority;
 
 class WorkspaceController extends Controller
 {
@@ -53,7 +56,18 @@ class WorkspaceController extends Controller
     public function show(Workspace $workspace): Response
     {
         return inertia(component: 'Workspace/Show', props: [
+            'card'      => fn () => CardResource::collection($workspace->load([
+                'cards' => fn ($q)  => $q->withCount(['tasks', 'members', 'attachments'])->with([
+                    'attachments',
+                    'members',
+                    'tasks' => fn($task) => $task->withCount('children'),
+                ])->orderBy('order')
+            ])->cards),
             'workspace' => fn () => new WorkspaceResource($workspace),
+            'page_settings' => [
+                'title' => $workspace->name,
+            ],
+            'statuses'  => fn() => CardStatus::options(),
         ]);
     }
 
