@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Card;
+use App\Models\Member;
 use App\Models\User;
 
 class MemberCardController extends Controller
@@ -37,6 +38,14 @@ class MemberCardController extends Controller
         ]);
 
         flashMessage('Member Successfully Invited');
+        return back();
+    }
+
+    public function member_destroy(Card $card, Member $member): RedirectResponse
+    {
+        $member->delete();
+
+        flashMessage('Member Successfully Deleted');
         return back();
     }
 }

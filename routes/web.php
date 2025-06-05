@@ -37,7 +37,8 @@ Route::controller(CardController::class)->group(function () {
 })->middleware('auth');
 
 Route::controller(MemberCardController::class)->group(function () {
-    Route::post('member/{card}/store', 'member_store')->name('member_card.store');
+    Route::post('card/member/{card}/store', 'member_store')->name('member_card.store');
+    Route::delete('card/member/{card}/destroy/{member}', 'member_destroy')->name('member_card.destroy');
 })->middleware('auth');
 
 Route::middleware('auth')->group(function () {
