@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WorkspaceController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\MemberCardController;
+use App\Http\Controllers\AttachmentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -39,6 +40,10 @@ Route::controller(CardController::class)->group(function () {
 Route::controller(MemberCardController::class)->group(function () {
     Route::post('card/member/{card}/store', 'member_store')->name('member_card.store');
     Route::delete('card/member/{card}/destroy/{member}', 'member_destroy')->name('member_card.destroy');
+})->middleware('auth');
+
+Route::controller(AttachmentController::class)->group(function () {
+    Route::post('card/attachment/{card}/create', 'store')->name('attachment.store');
 })->middleware('auth');
 
 Route::middleware('auth')->group(function () {
