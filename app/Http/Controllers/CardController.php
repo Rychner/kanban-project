@@ -11,6 +11,7 @@ use App\Http\Requests\CardRequest;
 use App\Http\Resources\CardSingleResource;
 use App\Models\Workspace;
 use App\Models\Card;
+use App\Models\User;
 
 class CardController extends Controller
 {
@@ -39,7 +40,7 @@ class CardController extends Controller
             ->orderByDesc('order', 'desc')
             ->first();
         
-        if($last_card) return 1;
+        if(!$last_card) return 1;
         return $last_card->order + 1;
     }
 
@@ -55,9 +56,13 @@ class CardController extends Controller
             'order'         => $this->ordering($workspace, $status),
         ]);
 
-        flashMessage('Card Information Succesfully Saved', 'success');
+        $card->members()->create([
+            'user_id'   => $request->user()->id,
+            'role'      => $card->user_id == $request->user()->id ? 'Project Manager' : 'Member',
+        ]);
 
-        return to_route('workspace.show', [$workspace]);
+        flashMessage('Card Information Succesfully Saved', 'success');
+        return to_route('card.edit', [$workspace, $card]);
     }
 
     public function show(Workspace $workspace, Card $card): Response
@@ -120,5 +125,18 @@ class CardController extends Controller
                 $card->save();
                 $order++;
             });
+    }
+
+    public function destroy(Workspace $workspace, Card $card): RedirectResponse
+    {
+        $last_status = $card->status->value;
+
+        $card->delete();
+
+        $this->adjustOrdering($workspace, $last_status);
+
+        flashMessage('Successfully Delete Card Information');
+
+        return to_route('workspace.show', [$workspace]);
     }
 }

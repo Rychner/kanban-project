@@ -8,7 +8,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from '@/resources/js/Components/ui/alert-dialog';
+} from '@/Components/ui/alert-dialog';
 
 export function ActionDialog({ trigger, action, title, description }) {
     return (

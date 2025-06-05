@@ -4,17 +4,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WorkspaceController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\MemberCardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Welcome');
 });
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
@@ -38,6 +34,10 @@ Route::controller(CardController::class)->group(function () {
     Route::put('card/{workspace:slug}/edit/{card}', 'update')->name('card.update');
     Route::post('card/{workspace:slug}/{card}/reorder', 'reorder')->name('card.reorder');
     Route::delete('card/{workspace:slug}/destroy/{card}', 'destroy')->name('card.destroy');
+})->middleware('auth');
+
+Route::controller(MemberCardController::class)->group(function () {
+    Route::post('member/{card}/store', 'member_store')->name('member_card.store');
 })->middleware('auth');
 
 Route::middleware('auth')->group(function () {

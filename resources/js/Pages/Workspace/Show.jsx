@@ -1,19 +1,30 @@
+import { ActionDialog } from '@/Components/ActionDialog';
 import GetPriorityBadge from '@/Components/GetPriorityBadge';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 import AppLayout from '@/Layouts/AppLayout';
-import { Link } from '@inertiajs/react';
-import { PiDotsThreeOutlineFill, PiPencilSimpleFill, PiPlus } from 'react-icons/pi';
+import { flashMessage } from '@/lib/utils';
+import { Link, router } from '@inertiajs/react';
+import { PiDotsThreeOutlineFill, PiPencilSimpleFill, PiPlus, PiTrashSimpleFill } from 'react-icons/pi';
+import { toast } from 'sonner';
 
 export default function Show({ ...props }) {
     const workspace = props.workspace;
     const statuses = props.statuses;
     const cards = props.card;
+
+    const statusColors = {
+        'To Do': 'bg-red-500 text-white',
+        'In Progress': 'bg-blue-500 text-white',
+        'On Review': 'bg-yellow-500 text-white',
+        Done: 'bg-green-500 text-white',
+    };
 
     return (
         <>
@@ -54,8 +65,12 @@ export default function Show({ ...props }) {
                 {/* card */}
                 <div className="mt-8 flex w-full flex-col justify-start gap-x-5 gap-y-8 sm:flex-row">
                     {statuses.map((status, index) => (
-                        <div className="w-full space-y-4 sm:w-1/4" key={index}>
-                            <div className="flex items-center justify-between">
+                        <div className="w-full space-y-4 rounded shadow-md sm:w-1/4" key={index}>
+                            <div
+                                className={`flex items-center justify-between rounded-t px-2 py-1 ${
+                                    statusColors[status.value] || 'bg-gray-100 text-gray-600'
+                                }`}
+                            >
                                 <span className="text-base font-semibold leading-relaxed tracking-tighter">
                                     {status.value}
                                 </span>
@@ -68,7 +83,7 @@ export default function Show({ ...props }) {
                                             },
                                         })}
                                     >
-                                        <PiPlus className="h-4 w-4 text-foreground transition-colors duration-200 hover:text-red-500"></PiPlus>
+                                        <PiPlus className="hover:text-bold h-4 w-4 text-white transition-colors duration-200 hover:text-foreground"></PiPlus>
                                     </Link>
                                 </div>
                             </div>
@@ -106,6 +121,40 @@ export default function Show({ ...props }) {
                                                                     </div>
                                                                 </Link>
                                                             </DropdownMenuItem>
+                                                            <DropdownMenuGroup>
+                                                                <ActionDialog
+                                                                    trigger={
+                                                                        <DropdownMenuItem
+                                                                            onSelect={(e) => e.preventDefault()}
+                                                                        >
+                                                                            <div className="flex items-center justify-between">
+                                                                                <span>Delete</span>
+                                                                                <span className="size-4">
+                                                                                    <PiTrashSimpleFill />
+                                                                                </span>
+                                                                            </div>
+                                                                        </DropdownMenuItem>
+                                                                    }
+                                                                    title="Delete Card"
+                                                                    description="Are You Sure Want to Delete This Card ?"
+                                                                    action={() =>
+                                                                        router.delete(
+                                                                            route('card.destroy', [workspace, card]),
+                                                                            {
+                                                                                preserveScroll: true,
+                                                                                preserveState: true,
+                                                                                onSuccess: (success) => {
+                                                                                    const flash = flashMessage(success);
+                                                                                    if (flash)
+                                                                                        toast[flash.type](
+                                                                                            flash.message,
+                                                                                        );
+                                                                                },
+                                                                            },
+                                                                        )
+                                                                    }
+                                                                />
+                                                            </DropdownMenuGroup>
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
                                                 </div>
