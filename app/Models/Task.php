@@ -28,7 +28,7 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function cards(): BelongsTo
+    public function card(): BelongsTo
     {
         return $this->belongsTo(Card::class);
     }
