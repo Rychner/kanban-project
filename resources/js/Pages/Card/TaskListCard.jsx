@@ -1,6 +1,7 @@
 import InputError from '@/Components/InputError';
 import TextInput from '@/Components/TextInput';
 import { Button } from '@/Components/ui/button';
+import { Progress } from '@/Components/ui/progress';
 import { flashMessage } from '@/lib/utils';
 import { router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
@@ -81,6 +82,9 @@ export default function TaskListCard({ tasks }) {
                                         </Button>
                                     </div>
                                 </div>
+
+                                <Progress className="mb-4 h-2.5" value={task.percentage} />
+
                                 <TaskListChildrenCard children={task.children} />
 
                                 {showFormItem[task.id] || task.children.length > 0 ? (
