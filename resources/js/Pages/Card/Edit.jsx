@@ -29,7 +29,11 @@ export default function Edit({ card, page_settings, statuses, priorities, worksp
 
                 <div className="grid grid-cols-1 gap-x-4 gap-y-8 pt-10 md:grid-cols-3">
                     <HeaderForm className="col-span-full" title="Attachment" subtitle="Attach your File Here." />
-                    <AttachmentCard action={route('attachment.store', [card])} members={card.members} />
+                    <AttachmentCard
+                        action={route('attachment.store', [card])}
+                        members={card.members}
+                        attachments={card.attachments}
+                    />
                 </div>
             </div>
         </>

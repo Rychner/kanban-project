@@ -11,4 +11,13 @@ export default defineConfig({
         }),
         react(),
     ],
+    server: {
+        watch: {
+            ignored: [
+                '**/vendor/**', // ✅ Abaikan folder vendor
+                '**/storage/**', // Opsional: storage juga bisa diabaikan
+                '**/node_modules/**' // Biasanya diabaikan otomatis
+            ],
+        },
+    },
 });

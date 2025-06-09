@@ -93,9 +93,7 @@ export default function Sidebar({ auth, url, workspaces }) {
                 <li>
                     {/* workspaces */}
                     <div className="flex items-center justify-between">
-                        <div className="text-foregorund text-xs font-semibold uppercase leading-relaxed">
-                            Workspaces
-                        </div>
+                        <div className="text-foregorund text-xs font-semibold uppercase leading-relaxed">Projects</div>
                         <Link href={route('workspace.create')}>
                             <PiPlus className="h-4 w-4 text-foreground hover:text-red-500"></PiPlus>
                         </Link>

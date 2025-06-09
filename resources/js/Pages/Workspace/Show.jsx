@@ -94,7 +94,7 @@ export default function Show({ ...props }) {
                                     .map((card, index) => (
                                         <Card
                                             key={index}
-                                            className="relative rounded-xl hover:ring-2 hover:ring-inset hover:ring-red-500"
+                                            className="relative rounded-xl hover:ring-2 hover:ring-inset hover:ring-black"
                                         >
                                             <CardHeader>
                                                 <div className="flex items-center justify-between">
