@@ -1,5 +1,6 @@
 import { ActionDialog } from '@/Components/ActionDialog';
 import GetPriorityBadge from '@/Components/GetPriorityBadge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
 import {
     DropdownMenu,
@@ -8,6 +9,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
+import { Progress } from '@/Components/ui/progress';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, router } from '@inertiajs/react';
@@ -96,7 +98,7 @@ export default function Show({ ...props }) {
                                 </div>
                             </div>
                             {/* column card container*/}
-                            <div className="flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-2">
+                            <div className="flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-4">
                                 {cards
                                     .filter((card) => card.status === status.value)
                                     .map((card, index) => (
@@ -174,54 +176,79 @@ export default function Show({ ...props }) {
                                                 </CardDescription>
                                             </CardHeader>
                                             <CardContent>
-                                                <div className="flex flex-col space-y-8">
+                                                <div className="flex flex-col space-y-4">
                                                     {card.has_task && (
                                                         <div>
                                                             <div className="mb-1.5 flex items-center justify-between">
-                                                                <p className="text-sm leading-relaxed tracking-tighter text-muted-foreground">
-                                                                    <span className="font-medium text-red-500">
-                                                                        {card.percentage} of 100
-                                                                    </span>
-                                                                </p>
-                                                                <p className="text-sm leading-relaxed tracking-tighter text-muted-foreground">
+                                                                <span className="text-sm leading-relaxed tracking-tighter text-muted-foreground">
                                                                     {card.deadline > 0 ? (
-                                                                        <span>{card.deadline} days left</span>
+                                                                        <span className="text-green-500">
+                                                                            <b className="text-muted-foreground">
+                                                                                {card.deadline}
+                                                                            </b>{' '}
+                                                                            days left
+                                                                        </span>
                                                                     ) : card.deadline == 0 ? (
                                                                         <span className="text-yellow-500">
-                                                                            Today is the Deadline
+                                                                            Today is The Deadline
                                                                         </span>
                                                                     ) : (
                                                                         <span className="text-red-500">Overdue</span>
                                                                     )}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                    <div className="flex items-center justify-between gap-x-4">
-                                                        {card.has_task && (
-                                                            <div className="flex items-center gap-x-1">
-                                                                <PiCheckSquare className="h-4 w-4 text-muted-foreground" />
+                                                                </span>
                                                                 <span className="text-sm leading-relaxed tracking-tighter text-muted-foreground">
-                                                                    {card.tasks_count} Tasks
+                                                                    <span>
+                                                                        <b>{card.percentage}</b> of 100
+                                                                    </span>
                                                                 </span>
                                                             </div>
-                                                        )}
-                                                        {card.member_count > 1 && (
+                                                            <Progress
+                                                                className="mb-4 h-2.5 w-full"
+                                                                value={card.percentage}
+                                                            />
+                                                        </div>
+                                                    )}
+                                                    <div className="flex items-center justify-between gap-x-1">
+                                                        {card.has_task && (
                                                             <div className="flex items-center gap-x-1">
-                                                                <PiUser className="h-4 w-4 text-muted-foreground" />
+                                                                <PiCheckSquare className="h-4 w-4 text-blue-500" />
                                                                 <span className="text-sm leading-relaxed tracking-tighter text-muted-foreground">
-                                                                    {card.member_count} Members
+                                                                    <b>{card.tasks_count}</b> Tasks
                                                                 </span>
                                                             </div>
                                                         )}
                                                         {card.has_attachment && (
                                                             <div className="flex items-center gap-x-1">
-                                                                <PiLinkSimple className="h-4 w-4 text-muted-foreground" />
+                                                                <PiLinkSimple className="h-4 w-4 text-green-500" />
                                                                 <span className="text-sm leading-relaxed tracking-tighter text-muted-foreground">
-                                                                    {card.attachments_count} Files
+                                                                    <b>{card.attachments_count}</b> Files
                                                                 </span>
                                                             </div>
                                                         )}
+                                                    </div>
+                                                    <div className="flex items-center justify-between gap-x-4">
+                                                        {card.member_count > 1 && (
+                                                            <div className="flex items-center gap-x-1">
+                                                                <PiUser className="h-4 w-4 text-muted-foreground" />
+                                                                <span className="text-sm leading-relaxed tracking-tighter text-muted-foreground">
+                                                                    <b>{card.member_count}</b> Members
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col space-y-4">
+                                                    <div className="flex">
+                                                        {card.members.map((member, index) => (
+                                                            <span key={index} className={index !== 0 ? '-ml-3' : ''}>
+                                                                <Avatar>
+                                                                    <AvatarImage src={member.user.avatar} />
+                                                                    <AvatarFallback>
+                                                                        {member.user.name.substring(0, 1)}
+                                                                    </AvatarFallback>
+                                                                </Avatar>
+                                                            </span>
+                                                        ))}
                                                     </div>
                                                 </div>
                                             </CardContent>
