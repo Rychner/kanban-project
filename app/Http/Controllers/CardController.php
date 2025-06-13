@@ -139,4 +139,44 @@ class CardController extends Controller
 
         return to_route('workspace.show', [$workspace]);
     }
+
+    public function reorder (Workspace $workspace, Card $card, Request $request): RedirectResponse
+    {
+        if($request->cardActive['type'] == $request->cardOver['type'])
+        {
+            $active = Card::find($request->cardActive['data']);
+            $over = Card::find($request->cardOver['data']);
+
+            if($active->status->value == $over->status->value)
+            {
+                $temp_order = $active->order;
+                $active->order = $over->order;
+                $over->order = $temp_order;
+
+                $active->save();
+                $over->save();
+            }
+            else {
+                $last_status_active = $active->status->value;
+                $active->status = $over->status->value;
+                $active->save();
+
+                $this->adjustOrdering($workspace, $last_status_active);
+                $this->adjustOrdering($workspace, $active->status->value);
+            }
+        }
+        else {
+            $active = Card::find($request->cardActive['data']);
+            $last_status_active = $ative->status->value;
+
+            $active->status = $request->cardOver['data'];
+            $active->order = $this->ordering($workspace, $request->cardOver['data']);
+            $active->save();
+
+            $this->adjustOrdering($workspace, $last_status_active);
+        }
+
+        flashMessage('Card Successfully Moved');
+        return to_route('workspace.show', $workspace);
+    }
 }
